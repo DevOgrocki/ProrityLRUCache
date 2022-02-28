@@ -63,17 +63,16 @@ func (lru *PriorityLruCache) Set(key string, value string, priority int, expiry 
 	if lru.isFull() {
 		if lru.maxSize == 0 {
 			return false
-		} else {
-			lru.evict()
-			// if the cache is still full, remove the lowest priority element.
-			if lru.isFull() {
+		}
+		lru.evict()
+		// if the cache is still full, remove the lowest priority element.
+		if lru.isFull() {
 
-				lowestPriority := lru.priorityHeap.Pop().(int)
-				leastRecentlyUsedValue := lru.priorityMap[lowestPriority].Back()
-				node := leastRecentlyUsedValue.Value.(*CacheNode)
-				lru.remove(node)
-				lru.timestampQueue.remove(node)
-			}
+			lowestPriority := lru.priorityHeap.Pop().(int)
+			leastRecentlyUsedValue := lru.priorityMap[lowestPriority].Back()
+			node := leastRecentlyUsedValue.Value.(*CacheNode)
+			lru.remove(node)
+			lru.timestampQueue.remove(node)
 		}
 	}
 	// add the new item
