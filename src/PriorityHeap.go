@@ -1,10 +1,5 @@
 package src
 
-import (
-	"container/heap"
-	"fmt"
-)
-
 // This code is taken from the https://pkg.go.dev/container/heap int heap example
 
 // An PriorityHeap is a min-heap of ints.
@@ -26,16 +21,4 @@ func (h *PriorityHeap) Pop() interface{} {
 	x := old[n-1]
 	*h = old[0 : n-1]
 	return x
-}
-
-// This example inserts several ints into an PriorityHeap, checks the minimum,
-// and removes them in order of priority.
-func main() {
-	h := &PriorityHeap{2, 1, 5}
-	heap.Init(h)
-	heap.Push(h, 3)
-	fmt.Printf("minimum: %d\n", (*h)[0])
-	for h.Len() > 0 {
-		fmt.Printf("%d ", heap.Pop(h))
-	}
 }
